@@ -11,3 +11,6 @@ print(summa)
 
 if km >= h:
     print('parak talu jaiet')
+
+if km<h:
+    print('Varu aiziet tik talu')
