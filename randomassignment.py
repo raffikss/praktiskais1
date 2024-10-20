@@ -1,10 +1,10 @@
-km = 5
-h =4
+km = 50
+h =23
 
 
-summa = (km+h)
+attalums = (km+h)
 
-print(summa)
+print(attalums)
 
 'Trial version'
 
@@ -14,3 +14,8 @@ if km >= h:
 
 if km<h:
     print('Varu aiziet tik talu')
+
+if attalums > 50:
+    print('ar kajam neaiziet')
+else:
+    print ('var aiziet')
