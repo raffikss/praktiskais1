@@ -1,3 +1,4 @@
+ss
 <<<<<<< HEAD
 <<<<<<< HEAD
 another edit of 'jauna_poga'
