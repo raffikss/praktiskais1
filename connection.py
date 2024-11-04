@@ -92,21 +92,21 @@ def insert_user_data(connection):
     try:
         cursor = connection.cursor()
         while True:
-            user_name = input("Enter user name (or type 'exit' to stop): ")  # entering user name
+            user_name = input("Enter user name (or type 'exit' to stop): ")  # entering the user name
             if user_name.lower() == 'exit':
-                break  # Exit the loop if the user types 'exit'
+                break  # Exits the loop if 'exit' is typed
 
-            user_status = input("Enter user status (active/inactive): ")  # Prompt for user status
+            user_status = input("Enter user status (active/inactive): ")  # Prompt for user activity
 
-            # Ensure the status is valid
+            # Check if the status is valid
             if user_status not in ['active', 'inactive']:
                 print("Invalid status. Please enter 'active' or 'inactive'.")
-                continue  # Ask for input again
+                continue  # Ask for an input again
 
-            # Insert the user data into the database
+            # Insertomg the user data into the DB
             insert_query = "INSERT INTO users (user_name, user_status) VALUES (%s, %s)"
             cursor.execute(insert_query, (user_name, user_status))
-            connection.commit()  # Commit the changes
+            connection.commit()  # Commits the changes
             print("User data inserted successfully.")
     except Error as e:
         print(f"Error inserting user data: {e}")
@@ -114,22 +114,22 @@ def insert_user_data(connection):
         cursor.close()
 
 def main():
-    # Establishing database connection
+    # Establishing DB connection
     connection = create_connection(config)
 
     if connection:
-        # Performomg database migration to ensure tables exist
+        # Performomg DB migration 
         migrate_database(connection)
 
 
 
-        # Read the current data from DB
+        # Readomg the current data from DB
         read_data(connection)
 
         # Allowing the user to insert new user data
         insert_user_data(connection)
 
-        # Reading data again to show the newly inserted records
+        # Reading data again to show the new records
         print("Updated user records:")
         read_data(connection)
 
@@ -138,4 +138,4 @@ def main():
         print("Database connection closed.")
 
 if __name__ == "__main__":
-    main()  # Executing the main function
+    main()  # Executes the main function
