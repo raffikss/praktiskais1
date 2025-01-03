@@ -1,16 +1,6 @@
+from config import DB_CONFIG  # Import the configuration dictionary
 import mysql.connector
 from mysql.connector import Error
-
-# DB configs
-import os
-
-# DB configs loaded from environment variables
-config = {
-    'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD', 'root'),
-    'host': os.getenv('DB_HOST', '127.0.0.1'),
-    'database': os.getenv('DB_NAME', 'testing')
-}
 
 def create_connection(config):
     """Create a database connection using the given config."""
@@ -37,7 +27,7 @@ def read_data(connection):
         cursor.close()
 
 def migrate_database(connection):
-    "database migration by creating a users table."
+    "Database migration by creating a users table."
     try:
         cursor = connection.cursor()
         create_users_table_query = """
@@ -92,21 +82,18 @@ def insert_user_data(connection):
     try:
         cursor = connection.cursor()
         while True:
-            user_name = input("Enter user name (or type 'exit' to stop): ")  # entering the user name
+            user_name = input("Enter user name (or type 'exit' to stop): ")
             if user_name.lower() == 'exit':
-                break  # Exits the loop if 'exit' is typed
+                break
 
-            user_status = input("Enter user status (active/inactive): ")  # Prompt for user activity
-
-            # Check if the status is valid
+            user_status = input("Enter user status (active/inactive): ")
             if user_status not in ['active', 'inactive']:
                 print("Invalid status. Please enter 'active' or 'inactive'.")
-                continue  # Ask for an input again
+                continue
 
-            # Insertomg the user data into the DB
             insert_query = "INSERT INTO users (user_name, user_status) VALUES (%s, %s)"
             cursor.execute(insert_query, (user_name, user_status))
-            connection.commit()  # Commits the changes
+            connection.commit()
             print("User data inserted successfully.")
     except Error as e:
         print(f"Error inserting user data: {e}")
@@ -115,15 +102,13 @@ def insert_user_data(connection):
 
 def main():
     # Establishing DB connection
-    connection = create_connection(config)
+    connection = create_connection(DB_CONFIG)
 
     if connection:
-        # Performomg DB migration 
+        # Performing DB migration
         migrate_database(connection)
 
-
-
-        # Readomg the current data from DB
+        # Reading the current data from DB
         read_data(connection)
 
         # Allowing the user to insert new user data
@@ -138,4 +123,4 @@ def main():
         print("Database connection closed.")
 
 if __name__ == "__main__":
-    main()  # Executes the main function
+    main()
