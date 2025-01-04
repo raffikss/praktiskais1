@@ -1,0 +1,3 @@
+2025-01-04 21:35:38,826 - log_setup - INFO - Successfully connected to the database.
+2025-01-04 21:35:38,835 - log_setup - INFO - Migration successful: users table is created.
+2025-01-04 21:35:38,835 - log_setup - INFO - Migration successful: new_table is created.

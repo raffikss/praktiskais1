@@ -1,16 +1,17 @@
 from config import DB_CONFIG  # Import the configuration dictionary
 import mysql.connector
 from mysql.connector import Error
+from log_setup import logger
 
 def create_connection(config):
     """Create a database connection using the given config."""
     try:
         connection = mysql.connector.connect(**config)
         if connection.is_connected():
-            print("Successfully connected to the database.")
+            logger.info("Successfully connected to the database.")
             return connection
     except Error as e:
-        print(f"Error while connecting to MySQL: {e}")
+        logger.error(f"Error while connecting to MySQL: {e}")
         return None
 
 def read_data(connection):
@@ -22,7 +23,7 @@ def read_data(connection):
         for row in rows:
             print(row)
     except Error as e:
-        print(f"Error reading data: {e}")
+        logger.error(f"Error reading data: {e}")
     finally:
         cursor.close()
 
@@ -38,7 +39,8 @@ def migrate_database(connection):
         )
         """
         cursor.execute(create_users_table_query)
-        print("Migration successful: users table is created.")
+        print("Migration successful: new_table is created.")
+        logger.info("Migration successful: users table is created.")
         
         migration_query = """
         CREATE TABLE IF NOT EXISTS new_table (
@@ -47,10 +49,10 @@ def migrate_database(connection):
         )
         """
         cursor.execute(migration_query)
-        print("Migration successful: new_table is created.")
+        logger.info("Migration successful: new_table is created.")
         
     except Error as e:
-        print(f"Error during migration: {e}")
+        logger.error(f"Error during migration: {e}")
     finally:
         cursor.close()
 
@@ -72,8 +74,9 @@ def insert_test_data(connection):
         cursor.execute(insert_query)
         connection.commit()
         print("Test data inserted into users table.")
+        logger.info("Test data inserted into users table.")
     except Error as e:
-        print(f"Error inserting data: {e}")
+        logger.error(f"Error inserting data: {e}")
     finally:
         cursor.close()
 
@@ -95,8 +98,9 @@ def insert_user_data(connection):
             cursor.execute(insert_query, (user_name, user_status))
             connection.commit()
             print("User data inserted successfully.")
+            logger.info("User data inserted successfully.")
     except Error as e:
-        print(f"Error inserting user data: {e}")
+        logger.error(f"Error inserting user data: {e}")
     finally:
         cursor.close()
 
@@ -115,12 +119,12 @@ def main():
         insert_user_data(connection)
 
         # Reading data again to show the new records
-        print("Updated user records:")
+        logger.info("Updated user records:")
         read_data(connection)
 
         # Close connection
         connection.close()
-        print("Database connection closed.")
+        logger.info("Database connection closed.")
 
 if __name__ == "__main__":
     main()
