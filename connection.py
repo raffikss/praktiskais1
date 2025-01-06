@@ -5,10 +5,9 @@ from mysql.connector import Error
 from log_setup import logger
 
 def create_connection(config):
-    """Create a database connection using the given config."""
     try:
-        connection = mysql.connector.connect(**config)
-        if connection.is_connected():
+        connection = mysql.connector.connect(**config) # Uses the config to connect to the database
+        if connection.is_connected(): # Checks if the connection was successful
             logger.info("Successfully connected to the database.")
             return connection
     except Error as e:
@@ -16,9 +15,8 @@ def create_connection(config):
         return None
 
 def read_data(connection):
-    """Read data from the 'users' table and print each record."""
     try:
-        cursor = connection.cursor()
+        cursor = connection.cursor() # Creates a cursor object to interact with the database
         cursor.execute("SELECT * FROM users WHERE user_status = 'active'")
         rows = cursor.fetchall()
         for row in rows:
@@ -27,9 +25,8 @@ def read_data(connection):
         logger.error(f"Error reading data: {e}")
     finally:
         cursor.close()
-
+# Creating database migration (makes tables if they don't exist)
 def migrate_database(connection):
-    """Database migration by creating a users table."""
     try:
         cursor = connection.cursor()
         create_users_table_query = """
