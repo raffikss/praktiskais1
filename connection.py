@@ -1,4 +1,5 @@
-from config import DB_CONFIG  # Import the configuration dictionary
+from config import DB_CONFIG  # Imports the configuration dictionary
+from db_inserter import DBInserter
 import mysql.connector
 from mysql.connector import Error
 from log_setup import logger
@@ -28,7 +29,7 @@ def read_data(connection):
         cursor.close()
 
 def migrate_database(connection):
-    "Database migration by creating a users table."
+    """Database migration by creating a users table."""
     try:
         cursor = connection.cursor()
         create_users_table_query = """
@@ -39,7 +40,7 @@ def migrate_database(connection):
         )
         """
         cursor.execute(create_users_table_query)
-        print("Migration successful: new_table is created.")
+        print("Migration successful: users table is created.")
         logger.info("Migration successful: users table is created.")
         
         migration_query = """
@@ -56,73 +57,31 @@ def migrate_database(connection):
     finally:
         cursor.close()
 
-def insert_test_data(connection):
-    "Inserting some test data into the users table, clearing existing data first."
-    try:
-        cursor = connection.cursor()
-        
-        # Clear existing entries
-        cursor.execute("DELETE FROM users;")
-        
-        # Insert new test data
-        insert_query = """
-        INSERT INTO users (user_name, user_status) VALUES
-        ('Alice', 'active'),
-        ('Bob', 'inactive'),
-        ('Charlie', 'active');
-        """
-        cursor.execute(insert_query)
-        connection.commit()
-        print("Test data inserted into users table.")
-        logger.info("Test data inserted into users table.")
-    except Error as e:
-        logger.error(f"Error inserting data: {e}")
-    finally:
-        cursor.close()
-
-def insert_user_data(connection):
-    "Insert user data into the users table interactively."
-    try:
-        cursor = connection.cursor()
-        while True:
-            user_name = input("Enter user name (or type 'exit' to stop): ")
-            if user_name.lower() == 'exit':
-                break
-
-            user_status = input("Enter user status (active/inactive): ")
-            if user_status not in ['active', 'inactive']:
-                print("Invalid status. Please enter 'active' or 'inactive'.")
-                continue
-
-            insert_query = "INSERT INTO users (user_name, user_status) VALUES (%s, %s)"
-            cursor.execute(insert_query, (user_name, user_status))
-            connection.commit()
-            print("User data inserted successfully.")
-            logger.info("User data inserted successfully.")
-    except Error as e:
-        logger.error(f"Error inserting user data: {e}")
-    finally:
-        cursor.close()
-
 def main():
     # Establishing DB connection
     connection = create_connection(DB_CONFIG)
 
     if connection:
-        # Performing DB migration
+        # Performs DB migration
         migrate_database(connection)
 
-        # Reading the current data from DB
+        # Reads current data from DB
         read_data(connection)
 
-        # Allowing the user to insert new user data
-        insert_user_data(connection)
+        # Create an instance of DBInserter 
+        inserter = DBInserter(connection)
+        
+        # Inserts test data
+        inserter.insert_test_data()
 
-        # Reading data again to show the new records
+        # Allow the user to insert new user data manually
+        inserter.insert_user_data()
+
+        # Re-reading data again refreh records
         logger.info("Updated user records:")
         read_data(connection)
 
-        # Close connection
+        # Closes connection
         connection.close()
         logger.info("Database connection closed.")
 

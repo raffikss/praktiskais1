@@ -1,3 +1,26 @@
 2025-01-04 21:35:38,826 - log_setup - INFO - Successfully connected to the database.
 2025-01-04 21:35:38,835 - log_setup - INFO - Migration successful: users table is created.
 2025-01-04 21:35:38,835 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 01:40:45,256 - log_setup - INFO - Successfully connected to the database.
+2025-01-06 01:40:45,283 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 01:40:45,287 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 01:47:52,355 - log_setup - INFO - Successfully connected to the database.
+2025-01-06 01:47:52,355 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 01:47:52,365 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 01:47:52,411 - log_setup - INFO - Test data inserted into users table.
+2025-01-06 01:47:58,386 - log_setup - INFO - Updated user records:
+2025-01-06 01:47:58,386 - log_setup - INFO - Database connection closed.
+2025-01-06 02:00:10,356 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 02:00:10,356 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 02:01:27,785 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 02:01:27,785 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 02:02:12,364 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 02:02:12,372 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 02:02:35,255 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 02:02:35,255 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 02:03:16,925 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 02:03:16,925 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 02:03:48,615 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 02:03:48,615 - log_setup - INFO - Migration successful: new_table is created.
+2025-01-06 02:03:55,531 - log_setup - INFO - Migration successful: users table is created.
+2025-01-06 02:03:55,531 - log_setup - INFO - Migration successful: new_table is created.
